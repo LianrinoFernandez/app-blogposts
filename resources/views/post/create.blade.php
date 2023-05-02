@@ -5,14 +5,14 @@
         </h2>
     </x-slot>
 
-    <form action="{{ route('post.index') }}" method="GET">
+    <form action="{{ route('post.index') }}" method="POST">
     @csrf
-    <!-- @method('POST') -->
+    @method('POST')
             <div>
                 <label class="font-semibold" for="author">AUTHOR:</label>
-                    <select class="font-semibold" name="author">
-                        @foreach($authors as $authors)
-                            <option>{{$authors->name}}</option>
+                    <select class="font-semibold" name="author_id">
+                        @foreach($authors as $author)
+                            <option value="{{ $author->id }}">{{$author->name}}</option>
                         @endforeach  
                     </select> 
             </div><br>

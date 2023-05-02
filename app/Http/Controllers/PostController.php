@@ -32,7 +32,7 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
         $post = Post::create([
-            'user_id' => $request->author->id(),
+            'user_id' => $request->author_id,
             'title' => $request->title,
             'summary' => $request->summary,
             'content' => $request ->content,
