@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Post;
@@ -14,7 +15,8 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
-        return view('post.index', compact('posts'));
+        $authors = User::all();
+        return view('post.index', compact(['posts','authors']));
     }
 
     /**
@@ -46,7 +48,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-       return view('post.show', compact('post'));
+        $author = User::find($post->user_id);
+       return view('post.show', compact(['post','author']));
     }
 
     /**
@@ -54,22 +57,32 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('post.edit', compact('post'));
+        $author = User::find($post->user_id);
+        return view('post.edit', compact(['post','author']));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        
+       $post->update([
+        'title' => $request->title,
+        'summary' => $request->summary,
+        'content' => $request ->content,
+       ]);
+        return redirect(route('post.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
-        //
+       $post->delete();
+       return redirect(route('post.index'));
     }
+   
+    
 }

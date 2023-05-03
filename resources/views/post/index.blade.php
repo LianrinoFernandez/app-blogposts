@@ -1,15 +1,18 @@
 <x-app-layout>
-@foreach($posts as $post)
-<div class="border:thin">
-    <h1>Title: {{$post['title']}}</h1>
-        <h2>Summary: {{$post['summary']}}</h2>
-            <h3>Content: {{$post['content']}}</h3>
-
-        <a href ="">EDIT</a> 
+@foreach($authors as $author)
+@foreach ($author->posts as $post)
+    <div>
+    <h1> Created by: {{$author->name}} </h1>
+        <h2>Title: {{$post['title']}}</h2>
+            <h3>Summary: {{$post['summary']}}</3>
+                <h4>Content: {{$post['content']}}</h4>
+ <br>
+        <a href ="{{'/post/'.$post['id'].'/edit'}}">EDIT</a> 
         
-        <a href ="">REMOVE</a><br>
+        <a href ="{{'/post/'.$post['id']}}">REMOVE</a><br>
             =========
-        
 </div>
+        @endforeach
 @endforeach
+
 </x-app-layout>
